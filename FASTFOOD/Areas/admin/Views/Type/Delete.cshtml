@@ -1,0 +1,47 @@
+﻿@model FASTFOOD.LOAIMONAN
+
+@{
+    ViewBag.Title = "Delete";
+}
+
+
+<h2>Are you sure you want to delete this?</h2>
+<div>
+
+    <hr />
+
+
+    <table class="table"  style="width: fit-content;">
+        <tr>
+            <th>
+                Mã số loại:
+            </th>
+            <td>
+                @Html.DisplayFor(model => model.MSLOAI)
+            </td>
+        </tr>
+
+        <tr>
+            <th>
+                Tên loại:
+            </th>
+            <td>
+                @Html.DisplayFor(model => model.TENLOAI)
+            </td>
+        </tr>
+
+       
+
+    </table>
+
+    @using (Html.BeginForm())
+    {
+        @Html.AntiForgeryToken()
+
+        <div class="form-actions no-color">
+            <input type="submit" value="Xóa" class="btn btn-outline-success" /> |
+            <a href="~/admin/Type/getListType" class="btn btn-outline-info">Trở lại</a>
+        </div>
+    }
+</div>
+

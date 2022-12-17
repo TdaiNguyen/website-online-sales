@@ -1,0 +1,77 @@
+﻿
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <!-- Basic -->
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <!-- Mobile Metas -->
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+    <!-- Site Metas -->
+    <link rel="icon" href="~/Assets/images/fevicon.png" type="image/gif" />
+    <meta http-equiv="Content-Security-Policy" content="upgrade-insecure-requests">
+    <meta name="keywords" content="" />
+    <meta name="description" content="" />
+    <meta name="author" content="" />
+
+    <title>Sản phẩm</title>
+
+
+    <!-- bootstrap core css -->
+
+
+    <link href="~/Assets/css/bootstrap.css" rel="stylesheet" type="text/css" />
+    <!-- fonts style -->
+    <link href="https://fonts.googleapis.com/css?family=Poppins:400,600,700&display=swap" rel="stylesheet" />
+
+    <!-- font awesome style -->
+    <link href="~/Assets/css/font-awesome.min.css" rel="stylesheet" />
+
+    <!-- Custom styles for this template -->
+    <link href="~/Assets/css/style.css" rel="stylesheet" />
+
+    <!-- Pagination css-->
+    <link href="~/Content/PagedList.css" rel="stylesheet" />
+
+    <!-- Cart css-->
+    <link href="~/Assets/css/cart.css" rel="stylesheet" />
+
+    <!--css Menu-->
+    <link href="~/Assets/css/menu.css" rel="stylesheet" />
+
+    <!-- ACCOUNT-->
+    <link rel="stylesheet" href="~/Assets/account/fonts/material-icon/css/material-design-iconic-font.min.css">
+    <link rel="stylesheet" href="~/Assets/account/css/style.css">
+</head>
+<body>
+    <div class="hero_area">
+        @RenderBody()
+    </div>
+    <footer class="footer_section">
+        <div class="container">
+            <p>
+                &copy; <span id="displayYear"></span> TDFood@gmail.com
+
+            </p>
+        </div>
+    </footer>
+    <!-- footer section -->
+    <!-- jQery -->
+
+    <script src="~/Assets/js/jquery-3.4.1.min.js"></script>
+    <!-- bootstrap js -->
+    <script src="~/Assets/js/bootstrap.js"></script>
+    <!-- custom js -->
+    <script src="~/Assets/js/custom.js"></script>
+    <!-- Google Map -->
+    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCh39n5U-4IoWpsVGUHWdqB6puEkhRLdmI&callback=myMap"></script>
+    <!-- End Google Map -->
+    <!-- SweetAlert-->
+    <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+</body>
+</html>

@@ -1,0 +1,65 @@
+﻿@*@model IEnumerable<FASTFOOD.MONAN>*@
+@model PagedList.IPagedList<FASTFOOD.MONAN>
+@using PagedList.Mvc;
+@using FASTFOOD.Models
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_LayoutProduct.cshtml";
+}
+
+<script>
+    function AddToCart(MSMONAN) {
+        $.ajax({
+            type: 'POST',
+            url: '/Food/AddToCart',
+            data: { id: MSMONAN },
+            success: function (data) {
+                $("#Cart_Amount").html(data.ItemAmount);
+            }
+        });
+    }
+</script>
+
+
+@Html.Partial("_UseNav")
+
+        <section class="furniture_section layout_padding">
+            <div class="container">
+                <div class="row">
+                    @foreach (var item in Model)
+                    {
+                        <div class="col-md-6 col-lg-4">
+                            <div class="box">
+                                <div class="img-box">
+                                    @if (item.HINHANH != null)
+                                    {<a href="/Food/Details/@item.MSMONAN">
+    <img src="@Url.Content("~/Content/Images/" + item.HINHANH)" class="img-edit" />
+</a>
+                                    }
+                                    else
+                                    {
+                                        <img src="@Url.Content("~/Assets/img/no-product.png")" />
+                                    }
+
+                                </div>
+
+                                <div class="detail-box text-center">
+                                    <h5 class="product-title text-center">@Html.DisplayFor(modelItem => item.TENMONAN)</h5>
+                                    <div class="price_box">
+                                        <h6 class="product-price">@Html.DisplayFor(modelItem => item.DONGIA)</h6>
+                                    </div>
+
+                                    <input type="submit" class="btn btn-warning w-auto" onclick="AddToCart('@item.MSMONAN')" value="Mua hàng" />
+
+
+                                </div>
+
+                            </div>
+
+                        </div>}
+                </div>
+            </div>
+        </section>
+        <div class="d-flex flex-row-reverse mr-5">
+            @Html.PagedListPager(Model, page => Url.Action("Index", new { page }))
+        </div>

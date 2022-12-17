@@ -1,0 +1,209 @@
+﻿@model IEnumerable<FASTFOOD.MONAN>
+@using FASTFOOD.Models
+@using FASTFOOD.Code
+@{
+    ViewBag.Title = "ShoppingCart";
+    Layout = "~/Views/Shared/_LayoutProduct.cshtml";
+}
+
+
+<script>
+
+
+    function update(MSMON) {
+        var i = 0;
+        if ("#Quantity[txt-id='" + MSMON + "']" !== '') {
+            i = $("#Quantity[txt-id='" + MSMON + "']").val();
+        }
+        $.ajax({
+            type: 'POST',
+            url: '/Food/update',
+            data: { id: MSMON, quantity: i },
+            success: function (data) {
+                $("#Quantity[txt-id='" + MSMON + "']").val(data.ItemAmount);
+                $("#Price[txt-id='" + MSMON + "']").text(data.SumPrice);
+                $("#Error[txt-id='" + MSMON + "']").text(data.Error);
+                $("#Total").text( data.Total);
+                $("#Cart_Amount").html(data.cartcount);
+                window.open('/Food/ShoppingCart', '_self');
+            }
+        });
+    }
+
+    function submitResult(e, id) {
+        e.preventDefault();
+        Swal.fire({
+            title: 'Xác nhận',
+            text: "Xóa sản phẩm khỏi giỏ hàng?",
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#3085d6',
+            cancelButtonColor: '#d33',
+            confirmButtonText: 'Xác nhận!',
+            cancelButtonText: 'Hủy'
+        }).then((result) => {
+            if (result.isConfirmed) {
+                Swal.fire(
+                    'Đã xóa!',
+                    'Sản phẩm đã được xóa khỏi giỏ hàng.',
+                    'success'
+                ).then((result) => document.getElementById("Delete" + id).submit())
+            }
+        })
+    }
+    function buyResult(e) {
+        e.preventDefault();
+        Swal.fire({
+            title: 'Xác nhận',
+            text: "Xác nhận đặt món ăn?",
+            icon: 'info',
+            showCancelButton: true,
+            confirmButtonColor: '#d33',
+            confirmButtonText: 'Xác nhận',
+            cancelButtonText:'Hủy'
+        }).then((result) => {
+            if (result.isConfirmed) {
+                Swal.fire(
+                    'Đã đặt hàng!',
+                    'Món ăn đã được đặt!.',
+                    'Success'
+                ).then((result) => document.getElementById("BuyProduct").submit())
+            }
+        })
+    }
+
+    function login(e) {
+        e.preventDefault();
+        Swal.fire({
+            title: 'Lỗi',
+            text: "Xin đăng nhập trước khi đặt món ăn",
+            icon: 'error',
+            showCancelButton: true,
+            confirmButtonColor: '#3085d6',
+            cancelButtonColor: '#d33',
+            confirmButtonText: 'Đăng nhập',
+            cancelButtonText: 'Hủy'
+        }).then((result) => document.getElementById("Login").submit())
+    }
+</script>
+
+    
+@Html.Partial("_UseNav")
+<section class="h-100" style="background-color: #eee;">
+    <div class="container h-100 py-5">
+        <div class="row d-flex justify-content-center align-items-center h-100">
+            <div class="col-md-12">
+                <div class="d-flex justify-content-between align-items-center mb-4">
+                    <h3 class="fw-normal mb-0 text-black mt-5"  style="font-family: sans-serif;">Giỏ Hàng</h3>
+                </div>
+                @{
+                    double total = 0;
+                    List<CartItem> listCart = (List<CartItem>)Session["ShoppingCart"];
+                }
+                @if (listCart != null && listCart.Count > 0)
+                {
+                    foreach (var item in (List<CartItem>)Session["ShoppingCart"])
+                    {
+            <div class="card rounded-3 mb-4">
+                <div class="card-body p-4">
+                    <div class="row d-flex justify-content-between align-items-center">
+                        <div class="col-md-2 col-lg-2 col-xl-2">
+                            <img src="@Url.Content("~/Content/Images/" + item.foodOrder.HINHANH)" class="img-fluid rounded-3" alt="cover page" />
+                        </div>
+                        <div class="col-md-3 col-lg-3 col-xl-3 edit-class">
+                            <p class="lead fw-normal mb-2">@item.foodOrder.TENMONAN</p>
+                            <p><span class="text-muted">Đơn vị: </span>@decimal.Round((decimal)(@item.foodOrder.DONGIA), 0, MidpointRounding.AwayFromZero).ToString("#,###.##vnđ")</p>
+                        </div>
+                        <div class="col-md-3 col-lg-3 d-flex">
+                            <button class="btn btn-link px-2"
+                                    onclick="this.parentNode.querySelector('input[type=number]').stepDown()">
+                                <i class="fa fa-minus"></i>
+                            </button>
+
+                            <input min="0" type="number" value="@item.Quantity" class="form-control form-control-sm text-center edit-class" style="width:50px;" id="Quantity" txt-id="@item.foodOrder.MSMONAN" />
+
+                            <button class="btn btn-link px-2"
+                                    onclick="this.parentNode.querySelector('input[type=number]').stepUp()">
+                                <i class="fa fa-plus"></i>
+                            </button>
+                            <input type="button" value="Cập nhật" class="btn btn-warning" id="Update" onclick="update(@item.foodOrder.MSMONAN)" />
+
+                        </div>
+
+                        <div class="d-flex">
+                            <p>
+                                <span class="text-muted">Thành tiền</span> <br />
+                                @{ double sum = item.SumPrice();
+                                    total += sum;
+                                }
+
+                                <h5 class="mb-0" id="Price" txt-id="@item.foodOrder.MSMONAN">@sum.ToString("#,###.##") VNĐ</h5>
+                            </p>
+                        </div>
+
+                        <div class="col-md-1 col-lg-1 col-xl-1 text-end">
+
+                            @using (Html.BeginForm("RemoveCart", "Food", FormMethod.Post, new { id = "Delete" + item.foodOrder.MSMONAN }))
+                            {
+                                <input type="hidden" value="@item.foodOrder.MSMONAN" name="MSMONAN" id="MSMONAN" />
+                                <button type="submit" onclick="return submitResult(event,@item.foodOrder.MSMONAN)">
+                                    <i class="fa fa-trash fa-lg"></i>
+                                </button>
+                            }
+                        </div>
+                    </div>
+                    <span id="Error" txt-id="@item.foodOrder.MSMONAN" class="note"></span>
+                </div>  
+            </div>
+                      
+                    }
+
+                    <div class="card rounded-3 mb-4">
+                        <div class="card-body p-4">
+                            <div class="float-end">
+                                <p class="mb-0 me-5 d-flex align-items-center" style="float:right">
+                                    <span class="small text-muted me-2 p-1">Order total: </span> <span id="Total" class="lead fw-normal"> @total.ToString("#,###.##") VNĐ</span>
+                                </p>
+                            </div>
+
+                        </div>
+                    </div>
+
+                    <div class="d-flex justify-content-between">
+                        <a href="/Food/Index">Tiếp tục mua hàng</a>
+                        @if (SessionHelper.GetSession() != null)
+                        {
+                            using (Html.BeginForm("Buy", "Food", FormMethod.Post, new { id = "BuyProduct" }))
+                            {
+                                <input type="hidden" value="@total" name="Total" id="Total" />
+                                <button type="button" class="btn btn-danger btn-block btn-lg" onclick="return buyResult(event)">Đặt hàng</button>
+                            }
+                        }
+                        else
+                        {
+                            using (Html.BeginForm("Index", "Account", FormMethod.Get, new { id = "Login" }))
+                            {
+                                <input type="hidden" value="@total" name="Total" id="Total" />
+                                <button type="button" class="btn btn-danger btn-block btn-lg" onclick="return login(event)">Đặt hàng</button>
+                            }
+                        }
+                        <a href="~/Food/OrderList" class="btn btn-primary btn-lg">Đơn hàng</a>
+                    </div>
+                }
+                else
+                {
+                    <div class="card">
+                        <div class="card-body">
+                            <p class="lead fw-normal mb-2">Không có sản phẩm nào trong giỏ hàng</p>
+                            <a href="~/Food/Index" class="back2shop"><i class="fas fa-long-arrow-alt-left me-2"></i>Trở về trang sản phẩm</a>
+                        </div>
+                    </div>
+                }
+            </div>
+    </div>
+        </div>
+    
+</section>
+
+
+

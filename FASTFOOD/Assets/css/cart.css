@@ -1,0 +1,35 @@
+﻿
+
+.shopping-cart{
+    float:right;
+}
+a.cart{
+    color:black;
+}
+a.cart span{
+    position:relative;
+}
+a.cart span small {
+        position: absolute;
+        top: -20px;
+        right: -15px;
+        padding: 10px 6px;
+        line-height: 0;
+        font-size: 11px;
+        background: #ff0000;
+        color: white;
+        -webkit-border-radius: 50%;
+        -moz-border-radius: 50%;
+        -ms-border-radius: 50%;
+        border-radius: 50%;
+}
+
+.edit-class {
+    margin-left: inherit;
+}
+
+.note {
+    margin-left: 551px;
+}
+
+

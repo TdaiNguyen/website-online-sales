@@ -1,0 +1,62 @@
+﻿@model FASTFOOD.MONAN
+
+@{
+    ViewBag.Title = "Delete";
+}
+
+
+<h2>Bạn có chắc muốn xóa món ăn này không?</h2>
+<div>
+
+    <hr />
+   
+
+    <table class="table">
+        <tr>
+            <th>
+                Tên món ăn: 
+            </th>
+            <td>
+                @Html.DisplayFor(model => model.TENMONAN)
+            </td>
+        </tr>
+      
+        <tr>
+            <th>
+                Đơn giá
+            </th>
+            <td>
+                @Html.DisplayFor(model => model.DONGIA)
+            </td>
+        </tr>
+     
+        <tr>
+            <th>
+                Hình ảnh:
+            </th>
+            <td>
+                @{ var img = Model.HINHANH;}
+                @if (img != null)
+                {
+                    <img src="@Url.Content("~/Content/Images/"+img)" width="150" height="150" class="rounded-circle" />
+                }
+                else
+                {
+                    <img src="@Url.Content("~/Assets/img/no-product.png")" width="150" height="150" class="rounded-circle" />
+                }
+            </td>
+        </tr>
+    
+    </table>
+
+    @using (Html.BeginForm())
+    {
+        @Html.AntiForgeryToken()
+
+        <div class="form-actions no-color">
+            <input type="submit" value="Xóa" class="btn btn-outline-success" /> |
+            <a href="~/admin/Admin/getListFood" class="btn btn-outline-info">Trở lại</a>
+        </div>
+    }
+</div>
+

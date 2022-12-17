@@ -1,0 +1,66 @@
+﻿@model FASTFOOD.MONAN
+
+@{
+    ViewBag.Title = "Details";
+
+}
+<h2>Chi tiết món ăn</h2>
+<table class="table table-bordered align-self-auto">
+        <tr>
+            <th>
+                Mã số món ăn:
+            </th>
+            <td>
+                @Html.DisplayFor(model => model.MSMONAN)
+            </td>
+        </tr>
+        <tr>
+            <th>
+                Tên loại:
+            </th>
+            <td>
+                @Html.DisplayFor(model => model.LOAIMONAN.TENLOAI)
+            </td>
+        </tr>
+        <tr>
+            <th>
+                Tên món:
+            </th>
+            <td>
+                @Html.DisplayFor(model => model.TENMONAN)
+            </td>
+        </tr>
+        <tr>
+            <th>
+                Đơn giá:
+            </th>
+            <td>
+                @Html.DisplayFor(model => model.DONGIA)
+            </td>
+        </tr>
+
+        <tr>
+            <th>
+                Hình ảnh:
+            </th>
+            <td>
+                @{ var img = Model.HINHANH;}
+                @if (img != null)
+                {
+                    <img src="@Url.Content("~/Content/Images/"+img)" width="150" height="150" class="rounded-circle" />
+                }
+                else
+                {
+                    <img src="@Url.Content("~/Assets/img/no-product.png")" width="150" height="150" class="rounded-circle" />
+                }
+            </td>
+        </tr>
+
+    </table>
+
+        <p>
+            @Html.ActionLink("Sửa", "/Edit", new { id = Model.MSMONAN }, new { @class = "btn btn-outline-success" }) |
+
+            <a href="~/admin/Admin/getListFood" class="btn btn-outline-info">Trở lại</a>
+        </p>
+

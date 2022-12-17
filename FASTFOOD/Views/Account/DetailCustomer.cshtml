@@ -1,0 +1,70 @@
+﻿@model FASTFOOD.TAIKHOAN
+@using FASTFOOD.Code
+
+@{
+    ViewBag.Title = "DetailCustomer";
+    Layout = "~/Views/Shared/_LayoutAccount.cshtml";
+}
+
+
+
+
+
+            <section class="signup">
+                <div class="container-layout-account">
+                    <h2 class="form-title text-center pt-5" >Thông tin cá nhân</h2>
+                    <div class="signup-content">
+                        <div class="signup-image">
+                            @if (Model.AVATAR == null)
+                            {
+                                <div class="m-b-25">
+                                    <img src="@Url.Content("~/Content/Images/userprofile.png")" class="img-radius rounded rounded-3"width="400px" height="400px" alt="User-Profile-Image">
+                                </div>
+                            }
+                            else
+                            {
+                                <div class="m-b-25">
+                                    <img src="@Url.Content("~/Content/Images/Users/"+Model.AVATAR)" class="img-radius rounded rounded-3" width="400px" height="400px" alt="User-Profile-Image">
+                                </div>
+                            }
+
+
+                            <a href="#" class="signup-image-link">I am already member</a>
+                        </div>
+                        <div class="signup-form">
+
+
+                            <div class="form-group">
+
+                                <p>First Name</p>
+                                <h6>@Model.FIRSTNAME</h6>
+                            </div>
+                            <div class="form-group">
+
+                                <p>Last Name</p>
+                                <h6>@Model.LASTNAME</h6>
+                            </div>
+                            <div class="form-group">
+
+                                <p>Email</p>
+                                <h6>@Model.EMAIL</h6>
+                            </div>
+                            <div class="form-group">
+
+                                <p>Address</p>
+                                <h6>@Model.DIACHI</h6>
+                            </div>
+
+                            <div class="mt-2">
+                                @Html.ActionLink("Chỉnh sửa", "/EditInfo", new { @id = Model.IDUSER }, new { @class = "btn btn-outline-warning" })
+                            </div>
+                        </div>
+
+
+                        
+                       
+
+                    </div>
+                    </div>
+                </div>
+            </section>

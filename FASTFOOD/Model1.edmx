@@ -1,0 +1,344 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+      <Schema Namespace="fastfoodModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="DATMONAN">
+          <Key>
+            <PropertyRef Name="MSDATMONAN" />
+          </Key>
+          <Property Name="MSDATMONAN" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="IDUSER" Type="int" Nullable="false" />
+          <Property Name="NGAYLAP" Type="datetime" />
+          <Property Name="THANHTIEN" Type="bigint" />
+          <Property Name="TRANGTHAI" Type="int" />
+        </EntityType>
+        <EntityType Name="HOADON">
+          <Key>
+            <PropertyRef Name="IDHD" />
+          </Key>
+          <Property Name="MSMONAN" Type="int" Nullable="false" />
+          <Property Name="MSDATMONAN" Type="int" Nullable="false" />
+          <Property Name="SOLUONG" Type="int" />
+          <Property Name="IDHD" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+        </EntityType>
+        <EntityType Name="LOAIMONAN">
+          <Key>
+            <PropertyRef Name="MSLOAI" />
+          </Key>
+          <Property Name="MSLOAI" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="TENLOAI" Type="nvarchar" MaxLength="50" />
+        </EntityType>
+        <EntityType Name="MONAN">
+          <Key>
+            <PropertyRef Name="MSMONAN" />
+          </Key>
+          <Property Name="MSMONAN" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="MSLOAI" Type="int" Nullable="false" />
+          <Property Name="TENMONAN" Type="nvarchar" MaxLength="50" />
+          <Property Name="HINHANH" Type="varchar" MaxLength="255" />
+          <Property Name="DONGIA" Type="money" />
+        </EntityType>
+        <EntityType Name="TAIKHOAN">
+          <Key>
+            <PropertyRef Name="IDUSER" />
+          </Key>
+          <Property Name="IDUSER" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="FIRSTNAME" Type="nvarchar" MaxLength="255" />
+          <Property Name="LASTNAME" Type="nvarchar" MaxLength="255" />
+          <Property Name="EMAIL" Type="nvarchar" MaxLength="255" />
+          <Property Name="PASSWORD" Type="nvarchar" MaxLength="255" />
+          <Property Name="DIACHI" Type="nvarchar" MaxLength="255" />
+          <Property Name="AUTH" Type="int" />
+          <Property Name="AVATAR" Type="varchar" MaxLength="255" />
+        </EntityType>
+        <Association Name="FK_DATMONAN_DATMON_TAIKHOAN">
+          <End Role="TAIKHOAN" Type="Self.TAIKHOAN" Multiplicity="1" />
+          <End Role="DATMONAN" Type="Self.DATMONAN" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="TAIKHOAN">
+              <PropertyRef Name="IDUSER" />
+            </Principal>
+            <Dependent Role="DATMONAN">
+              <PropertyRef Name="IDUSER" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_HOADON_CT_FOOD_MONAN">
+          <End Role="MONAN" Type="Self.MONAN" Multiplicity="1" />
+          <End Role="HOADON" Type="Self.HOADON" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="MONAN">
+              <PropertyRef Name="MSMONAN" />
+            </Principal>
+            <Dependent Role="HOADON">
+              <PropertyRef Name="MSMONAN" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_HOADON_CT_HD_DATMONAN">
+          <End Role="DATMONAN" Type="Self.DATMONAN" Multiplicity="1" />
+          <End Role="HOADON" Type="Self.HOADON" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="DATMONAN">
+              <PropertyRef Name="MSDATMONAN" />
+            </Principal>
+            <Dependent Role="HOADON">
+              <PropertyRef Name="MSDATMONAN" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_MONAN_TYPE_FOOD_LOAIMONA">
+          <End Role="LOAIMONAN" Type="Self.LOAIMONAN" Multiplicity="1" />
+          <End Role="MONAN" Type="Self.MONAN" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="LOAIMONAN">
+              <PropertyRef Name="MSLOAI" />
+            </Principal>
+            <Dependent Role="MONAN">
+              <PropertyRef Name="MSLOAI" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="fastfoodModelStoreContainer">
+          <EntitySet Name="DATMONAN" EntityType="Self.DATMONAN" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="HOADON" EntityType="Self.HOADON" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="LOAIMONAN" EntityType="Self.LOAIMONAN" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="MONAN" EntityType="Self.MONAN" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="TAIKHOAN" EntityType="Self.TAIKHOAN" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK_DATMONAN_DATMON_TAIKHOAN" Association="Self.FK_DATMONAN_DATMON_TAIKHOAN">
+            <End Role="TAIKHOAN" EntitySet="TAIKHOAN" />
+            <End Role="DATMONAN" EntitySet="DATMONAN" />
+          </AssociationSet>
+          <AssociationSet Name="FK_HOADON_CT_FOOD_MONAN" Association="Self.FK_HOADON_CT_FOOD_MONAN">
+            <End Role="MONAN" EntitySet="MONAN" />
+            <End Role="HOADON" EntitySet="HOADON" />
+          </AssociationSet>
+          <AssociationSet Name="FK_HOADON_CT_HD_DATMONAN" Association="Self.FK_HOADON_CT_HD_DATMONAN">
+            <End Role="DATMONAN" EntitySet="DATMONAN" />
+            <End Role="HOADON" EntitySet="HOADON" />
+          </AssociationSet>
+          <AssociationSet Name="FK_MONAN_TYPE_FOOD_LOAIMONA" Association="Self.FK_MONAN_TYPE_FOOD_LOAIMONA">
+            <End Role="LOAIMONAN" EntitySet="LOAIMONAN" />
+            <End Role="MONAN" EntitySet="MONAN" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="fastfoodModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="DATMONAN">
+          <Key>
+            <PropertyRef Name="MSDATMONAN" />
+          </Key>
+          <Property Name="MSDATMONAN" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="IDUSER" Type="Int32" Nullable="false" />
+          <Property Name="NGAYLAP" Type="DateTime" Precision="3" />
+          <Property Name="THANHTIEN" Type="Int64" />
+          <Property Name="TRANGTHAI" Type="Int32" />
+          <NavigationProperty Name="TAIKHOAN" Relationship="Self.FK_DATMONAN_DATMON_TAIKHOAN" FromRole="DATMONAN" ToRole="TAIKHOAN" />
+          <NavigationProperty Name="HOADONs" Relationship="Self.FK_HOADON_CT_HD_DATMONAN" FromRole="DATMONAN" ToRole="HOADON" />
+        </EntityType>
+        <EntityType Name="HOADON">
+          <Key>
+            <PropertyRef Name="IDHD" />
+          </Key>
+          <Property Name="MSMONAN" Type="Int32" Nullable="false" />
+          <Property Name="MSDATMONAN" Type="Int32" Nullable="false" />
+          <Property Name="SOLUONG" Type="Int32" />
+          <Property Name="IDHD" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <NavigationProperty Name="DATMONAN" Relationship="Self.FK_HOADON_CT_HD_DATMONAN" FromRole="HOADON" ToRole="DATMONAN" />
+          <NavigationProperty Name="MONAN" Relationship="Self.FK_HOADON_CT_FOOD_MONAN" FromRole="HOADON" ToRole="MONAN" />
+        </EntityType>
+        <EntityType Name="LOAIMONAN">
+          <Key>
+            <PropertyRef Name="MSLOAI" />
+          </Key>
+          <Property Name="MSLOAI" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="TENLOAI" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="MONANs" Relationship="Self.FK_MONAN_TYPE_FOOD_LOAIMONA" FromRole="LOAIMONAN" ToRole="MONAN" />
+        </EntityType>
+        <EntityType Name="MONAN">
+          <Key>
+            <PropertyRef Name="MSMONAN" />
+          </Key>
+          <Property Name="MSMONAN" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="MSLOAI" Type="Int32" Nullable="false" />
+          <Property Name="TENMONAN" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="HINHANH" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
+          <Property Name="DONGIA" Type="Decimal" Precision="19" Scale="4" />
+          <NavigationProperty Name="HOADONs" Relationship="Self.FK_HOADON_CT_FOOD_MONAN" FromRole="MONAN" ToRole="HOADON" />
+          <NavigationProperty Name="LOAIMONAN" Relationship="Self.FK_MONAN_TYPE_FOOD_LOAIMONA" FromRole="MONAN" ToRole="LOAIMONAN" />
+        </EntityType>
+        <EntityType Name="TAIKHOAN">
+          <Key>
+            <PropertyRef Name="IDUSER" />
+          </Key>
+          <Property Name="IDUSER" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="FIRSTNAME" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Name="LASTNAME" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Name="EMAIL" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Name="PASSWORD" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Name="DIACHI" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Name="AUTH" Type="Int32" />
+          <Property Name="AVATAR" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="DATMONANs" Relationship="Self.FK_DATMONAN_DATMON_TAIKHOAN" FromRole="TAIKHOAN" ToRole="DATMONAN" />
+        </EntityType>
+        <Association Name="FK_DATMONAN_DATMON_TAIKHOAN">
+          <End Role="TAIKHOAN" Type="Self.TAIKHOAN" Multiplicity="1" />
+          <End Role="DATMONAN" Type="Self.DATMONAN" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="TAIKHOAN">
+              <PropertyRef Name="IDUSER" />
+            </Principal>
+            <Dependent Role="DATMONAN">
+              <PropertyRef Name="IDUSER" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_HOADON_CT_HD_DATMONAN">
+          <End Role="DATMONAN" Type="Self.DATMONAN" Multiplicity="1" />
+          <End Role="HOADON" Type="Self.HOADON" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="DATMONAN">
+              <PropertyRef Name="MSDATMONAN" />
+            </Principal>
+            <Dependent Role="HOADON">
+              <PropertyRef Name="MSDATMONAN" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_HOADON_CT_FOOD_MONAN">
+          <End Role="MONAN" Type="Self.MONAN" Multiplicity="1" />
+          <End Role="HOADON" Type="Self.HOADON" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="MONAN">
+              <PropertyRef Name="MSMONAN" />
+            </Principal>
+            <Dependent Role="HOADON">
+              <PropertyRef Name="MSMONAN" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_MONAN_TYPE_FOOD_LOAIMONA">
+          <End Role="LOAIMONAN" Type="Self.LOAIMONAN" Multiplicity="1" />
+          <End Role="MONAN" Type="Self.MONAN" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="LOAIMONAN">
+              <PropertyRef Name="MSLOAI" />
+            </Principal>
+            <Dependent Role="MONAN">
+              <PropertyRef Name="MSLOAI" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="fastfoodEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="DATMONANs" EntityType="Self.DATMONAN" />
+          <EntitySet Name="HOADONs" EntityType="Self.HOADON" />
+          <EntitySet Name="LOAIMONANs" EntityType="Self.LOAIMONAN" />
+          <EntitySet Name="MONANs" EntityType="Self.MONAN" />
+          <EntitySet Name="TAIKHOANs" EntityType="Self.TAIKHOAN" />
+          <AssociationSet Name="FK_DATMONAN_DATMON_TAIKHOAN" Association="Self.FK_DATMONAN_DATMON_TAIKHOAN">
+            <End Role="TAIKHOAN" EntitySet="TAIKHOANs" />
+            <End Role="DATMONAN" EntitySet="DATMONANs" />
+          </AssociationSet>
+          <AssociationSet Name="FK_HOADON_CT_HD_DATMONAN" Association="Self.FK_HOADON_CT_HD_DATMONAN">
+            <End Role="DATMONAN" EntitySet="DATMONANs" />
+            <End Role="HOADON" EntitySet="HOADONs" />
+          </AssociationSet>
+          <AssociationSet Name="FK_HOADON_CT_FOOD_MONAN" Association="Self.FK_HOADON_CT_FOOD_MONAN">
+            <End Role="MONAN" EntitySet="MONANs" />
+            <End Role="HOADON" EntitySet="HOADONs" />
+          </AssociationSet>
+          <AssociationSet Name="FK_MONAN_TYPE_FOOD_LOAIMONA" Association="Self.FK_MONAN_TYPE_FOOD_LOAIMONA">
+            <End Role="LOAIMONAN" EntitySet="LOAIMONANs" />
+            <End Role="MONAN" EntitySet="MONANs" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="fastfoodModelStoreContainer" CdmEntityContainer="fastfoodEntities">
+          <EntitySetMapping Name="DATMONANs">
+            <EntityTypeMapping TypeName="fastfoodModel.DATMONAN">
+              <MappingFragment StoreEntitySet="DATMONAN">
+                <ScalarProperty Name="MSDATMONAN" ColumnName="MSDATMONAN" />
+                <ScalarProperty Name="IDUSER" ColumnName="IDUSER" />
+                <ScalarProperty Name="NGAYLAP" ColumnName="NGAYLAP" />
+                <ScalarProperty Name="THANHTIEN" ColumnName="THANHTIEN" />
+                <ScalarProperty Name="TRANGTHAI" ColumnName="TRANGTHAI" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="HOADONs">
+            <EntityTypeMapping TypeName="fastfoodModel.HOADON">
+              <MappingFragment StoreEntitySet="HOADON">
+                <ScalarProperty Name="MSMONAN" ColumnName="MSMONAN" />
+                <ScalarProperty Name="MSDATMONAN" ColumnName="MSDATMONAN" />
+                <ScalarProperty Name="SOLUONG" ColumnName="SOLUONG" />
+                <ScalarProperty Name="IDHD" ColumnName="IDHD" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="LOAIMONANs">
+            <EntityTypeMapping TypeName="fastfoodModel.LOAIMONAN">
+              <MappingFragment StoreEntitySet="LOAIMONAN">
+                <ScalarProperty Name="MSLOAI" ColumnName="MSLOAI" />
+                <ScalarProperty Name="TENLOAI" ColumnName="TENLOAI" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="MONANs">
+            <EntityTypeMapping TypeName="fastfoodModel.MONAN">
+              <MappingFragment StoreEntitySet="MONAN">
+                <ScalarProperty Name="MSMONAN" ColumnName="MSMONAN" />
+                <ScalarProperty Name="MSLOAI" ColumnName="MSLOAI" />
+                <ScalarProperty Name="TENMONAN" ColumnName="TENMONAN" />
+                <ScalarProperty Name="HINHANH" ColumnName="HINHANH" />
+                <ScalarProperty Name="DONGIA" ColumnName="DONGIA" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="TAIKHOANs">
+            <EntityTypeMapping TypeName="fastfoodModel.TAIKHOAN">
+              <MappingFragment StoreEntitySet="TAIKHOAN">
+                <ScalarProperty Name="IDUSER" ColumnName="IDUSER" />
+                <ScalarProperty Name="FIRSTNAME" ColumnName="FIRSTNAME" />
+                <ScalarProperty Name="LASTNAME" ColumnName="LASTNAME" />
+                <ScalarProperty Name="EMAIL" ColumnName="EMAIL" />
+                <ScalarProperty Name="PASSWORD" ColumnName="PASSWORD" />
+                <ScalarProperty Name="DIACHI" ColumnName="DIACHI" />
+                <ScalarProperty Name="AUTH" ColumnName="AUTH" />
+                <ScalarProperty Name="AVATAR" ColumnName="AVATAR" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="true" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>

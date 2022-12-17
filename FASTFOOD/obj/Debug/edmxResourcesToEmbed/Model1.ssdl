@@ -1,0 +1,123 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="fastfoodModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+  <EntityType Name="DATMONAN">
+    <Key>
+      <PropertyRef Name="MSDATMONAN" />
+    </Key>
+    <Property Name="MSDATMONAN" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="IDUSER" Type="int" Nullable="false" />
+    <Property Name="NGAYLAP" Type="datetime" />
+    <Property Name="THANHTIEN" Type="bigint" />
+    <Property Name="TRANGTHAI" Type="int" />
+  </EntityType>
+  <EntityType Name="HOADON">
+    <Key>
+      <PropertyRef Name="IDHD" />
+    </Key>
+    <Property Name="MSMONAN" Type="int" Nullable="false" />
+    <Property Name="MSDATMONAN" Type="int" Nullable="false" />
+    <Property Name="SOLUONG" Type="int" />
+    <Property Name="IDHD" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+  </EntityType>
+  <EntityType Name="LOAIMONAN">
+    <Key>
+      <PropertyRef Name="MSLOAI" />
+    </Key>
+    <Property Name="MSLOAI" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="TENLOAI" Type="nvarchar" MaxLength="50" />
+  </EntityType>
+  <EntityType Name="MONAN">
+    <Key>
+      <PropertyRef Name="MSMONAN" />
+    </Key>
+    <Property Name="MSMONAN" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="MSLOAI" Type="int" Nullable="false" />
+    <Property Name="TENMONAN" Type="nvarchar" MaxLength="50" />
+    <Property Name="HINHANH" Type="varchar" MaxLength="255" />
+    <Property Name="DONGIA" Type="money" />
+  </EntityType>
+  <EntityType Name="TAIKHOAN">
+    <Key>
+      <PropertyRef Name="IDUSER" />
+    </Key>
+    <Property Name="IDUSER" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="FIRSTNAME" Type="nvarchar" MaxLength="255" />
+    <Property Name="LASTNAME" Type="nvarchar" MaxLength="255" />
+    <Property Name="EMAIL" Type="nvarchar" MaxLength="255" />
+    <Property Name="PASSWORD" Type="nvarchar" MaxLength="255" />
+    <Property Name="DIACHI" Type="nvarchar" MaxLength="255" />
+    <Property Name="AUTH" Type="int" />
+    <Property Name="AVATAR" Type="varchar" MaxLength="255" />
+  </EntityType>
+  <Association Name="FK_DATMONAN_DATMON_TAIKHOAN">
+    <End Role="TAIKHOAN" Type="Self.TAIKHOAN" Multiplicity="1" />
+    <End Role="DATMONAN" Type="Self.DATMONAN" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="TAIKHOAN">
+        <PropertyRef Name="IDUSER" />
+      </Principal>
+      <Dependent Role="DATMONAN">
+        <PropertyRef Name="IDUSER" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_HOADON_CT_FOOD_MONAN">
+    <End Role="MONAN" Type="Self.MONAN" Multiplicity="1" />
+    <End Role="HOADON" Type="Self.HOADON" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="MONAN">
+        <PropertyRef Name="MSMONAN" />
+      </Principal>
+      <Dependent Role="HOADON">
+        <PropertyRef Name="MSMONAN" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_HOADON_CT_HD_DATMONAN">
+    <End Role="DATMONAN" Type="Self.DATMONAN" Multiplicity="1" />
+    <End Role="HOADON" Type="Self.HOADON" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="DATMONAN">
+        <PropertyRef Name="MSDATMONAN" />
+      </Principal>
+      <Dependent Role="HOADON">
+        <PropertyRef Name="MSDATMONAN" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_MONAN_TYPE_FOOD_LOAIMONA">
+    <End Role="LOAIMONAN" Type="Self.LOAIMONAN" Multiplicity="1" />
+    <End Role="MONAN" Type="Self.MONAN" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="LOAIMONAN">
+        <PropertyRef Name="MSLOAI" />
+      </Principal>
+      <Dependent Role="MONAN">
+        <PropertyRef Name="MSLOAI" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <EntityContainer Name="fastfoodModelStoreContainer">
+    <EntitySet Name="DATMONAN" EntityType="Self.DATMONAN" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="HOADON" EntityType="Self.HOADON" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="LOAIMONAN" EntityType="Self.LOAIMONAN" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="MONAN" EntityType="Self.MONAN" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="TAIKHOAN" EntityType="Self.TAIKHOAN" Schema="dbo" store:Type="Tables" />
+    <AssociationSet Name="FK_DATMONAN_DATMON_TAIKHOAN" Association="Self.FK_DATMONAN_DATMON_TAIKHOAN">
+      <End Role="TAIKHOAN" EntitySet="TAIKHOAN" />
+      <End Role="DATMONAN" EntitySet="DATMONAN" />
+    </AssociationSet>
+    <AssociationSet Name="FK_HOADON_CT_FOOD_MONAN" Association="Self.FK_HOADON_CT_FOOD_MONAN">
+      <End Role="MONAN" EntitySet="MONAN" />
+      <End Role="HOADON" EntitySet="HOADON" />
+    </AssociationSet>
+    <AssociationSet Name="FK_HOADON_CT_HD_DATMONAN" Association="Self.FK_HOADON_CT_HD_DATMONAN">
+      <End Role="DATMONAN" EntitySet="DATMONAN" />
+      <End Role="HOADON" EntitySet="HOADON" />
+    </AssociationSet>
+    <AssociationSet Name="FK_MONAN_TYPE_FOOD_LOAIMONA" Association="Self.FK_MONAN_TYPE_FOOD_LOAIMONA">
+      <End Role="LOAIMONAN" EntitySet="LOAIMONAN" />
+      <End Role="MONAN" EntitySet="MONAN" />
+    </AssociationSet>
+  </EntityContainer>
+</Schema>

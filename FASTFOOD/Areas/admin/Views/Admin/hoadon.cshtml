@@ -1,0 +1,103 @@
+﻿@model IEnumerable<FASTFOOD.DATMONAN>
+
+@{
+    ViewBag.Title = "hoadon";
+
+}
+
+<h2>Hóa đơn</h2>
+
+
+<table class="table">
+    <tr>
+        <th>
+            Mã số hóa đơn
+        </th>
+        <th>
+            Tên khách hàng
+        </th>
+        <th>
+            Ngày mua hàng
+        </th>
+        <th>
+            Thành tiền
+        </th>
+        <th>
+           Trạng thái
+        </th>
+        <th>
+            Chi tiết
+        </th>
+        <th>Thao tác</th>
+    </tr>
+
+    @foreach (var item in Model)
+    {
+<tr>
+    <td>
+        @Html.DisplayFor(modelItem => item.MSDATMONAN)
+    </td>
+    <td>
+        @Html.DisplayFor(modelItem => item.TAIKHOAN.FIRSTNAME)
+    </td>
+    <td>
+        @Html.DisplayFor(modelItem => item.NGAYLAP)
+    </td>
+    <td>
+        @Html.DisplayFor(modelItem => item.THANHTIEN)
+    </td>
+
+
+  
+    @if (item.TRANGTHAI == 1)
+    {
+        <td>
+        Chờ xác nhận
+        </td>
+    }
+    else
+    {
+        <td>
+        Đã xác nhận
+        </td>
+    }
+
+<td>
+
+    @Html.ActionLink("Xem chi tiết", "../../Food/OrderDeTails", new { id = item.MSDATMONAN }, new { @class = "btn btn-outline-primary" })
+</td>
+<td>
+    @Html.ActionLink("Xác nhận", "AcceptBill", new { id = item.MSDATMONAN }, new { @class = "btn btn-outline-warning" })
+    @Html.ActionLink("Hủy", "Delete", new { id = item.MSDATMONAN }, new { @class = "btn btn-outline-danger" })
+</td>
+
+ 
+</tr>
+    }
+
+
+ </table>
+      
+  <script>
+      function update(MSDATMONAN) {
+          var i = 0;
+          if ("#status[txt-id='" + MSDATMONAN + "']" !== '') {
+              i = $("#Quanlity[txt-id='" + MSDATMONAN + "']").val();
+          }          
+              $.ajax({
+                  type: 'post',
+                  url: '/Admin/AcceptBill',
+                  data: { id: MSDATMONAN, trangthai: i }
+              }).done(function (data) {
+                  $("#status[txt-id='" + MSDATMONAN + "']").val(data.ItemAmount);
+                  
+                 
+              })
+          
+
+
+   
+          
+  </script>                      
+      
+                       

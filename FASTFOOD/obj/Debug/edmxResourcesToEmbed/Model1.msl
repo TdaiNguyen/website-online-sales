@@ -1,0 +1,59 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+  <EntityContainerMapping StorageEntityContainer="fastfoodModelStoreContainer" CdmEntityContainer="fastfoodEntities">
+    <EntitySetMapping Name="DATMONANs">
+      <EntityTypeMapping TypeName="fastfoodModel.DATMONAN">
+        <MappingFragment StoreEntitySet="DATMONAN">
+          <ScalarProperty Name="MSDATMONAN" ColumnName="MSDATMONAN" />
+          <ScalarProperty Name="IDUSER" ColumnName="IDUSER" />
+          <ScalarProperty Name="NGAYLAP" ColumnName="NGAYLAP" />
+          <ScalarProperty Name="THANHTIEN" ColumnName="THANHTIEN" />
+          <ScalarProperty Name="TRANGTHAI" ColumnName="TRANGTHAI" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="HOADONs">
+      <EntityTypeMapping TypeName="fastfoodModel.HOADON">
+        <MappingFragment StoreEntitySet="HOADON">
+          <ScalarProperty Name="MSMONAN" ColumnName="MSMONAN" />
+          <ScalarProperty Name="MSDATMONAN" ColumnName="MSDATMONAN" />
+          <ScalarProperty Name="SOLUONG" ColumnName="SOLUONG" />
+          <ScalarProperty Name="IDHD" ColumnName="IDHD" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="LOAIMONANs">
+      <EntityTypeMapping TypeName="fastfoodModel.LOAIMONAN">
+        <MappingFragment StoreEntitySet="LOAIMONAN">
+          <ScalarProperty Name="MSLOAI" ColumnName="MSLOAI" />
+          <ScalarProperty Name="TENLOAI" ColumnName="TENLOAI" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="MONANs">
+      <EntityTypeMapping TypeName="fastfoodModel.MONAN">
+        <MappingFragment StoreEntitySet="MONAN">
+          <ScalarProperty Name="MSMONAN" ColumnName="MSMONAN" />
+          <ScalarProperty Name="MSLOAI" ColumnName="MSLOAI" />
+          <ScalarProperty Name="TENMONAN" ColumnName="TENMONAN" />
+          <ScalarProperty Name="HINHANH" ColumnName="HINHANH" />
+          <ScalarProperty Name="DONGIA" ColumnName="DONGIA" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="TAIKHOANs">
+      <EntityTypeMapping TypeName="fastfoodModel.TAIKHOAN">
+        <MappingFragment StoreEntitySet="TAIKHOAN">
+          <ScalarProperty Name="IDUSER" ColumnName="IDUSER" />
+          <ScalarProperty Name="FIRSTNAME" ColumnName="FIRSTNAME" />
+          <ScalarProperty Name="LASTNAME" ColumnName="LASTNAME" />
+          <ScalarProperty Name="EMAIL" ColumnName="EMAIL" />
+          <ScalarProperty Name="PASSWORD" ColumnName="PASSWORD" />
+          <ScalarProperty Name="DIACHI" ColumnName="DIACHI" />
+          <ScalarProperty Name="AUTH" ColumnName="AUTH" />
+          <ScalarProperty Name="AVATAR" ColumnName="AVATAR" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+  </EntityContainerMapping>
+</Mapping>

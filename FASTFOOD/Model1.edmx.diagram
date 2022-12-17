@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+ <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <!-- Diagram content (shape and connector positions) -->
+    <edmx:Diagrams>
+      <Diagram DiagramId="de6a2c6bb3d5484cb472e46c89cc3173" Name="Diagram1">
+        <EntityTypeShape EntityType="fastfoodModel.DATMONAN" Width="1.5" PointX="3" PointY="5" IsExpanded="true" />
+        <EntityTypeShape EntityType="fastfoodModel.HOADON" Width="1.5" PointX="5.25" PointY="1" IsExpanded="true" />
+        <EntityTypeShape EntityType="fastfoodModel.LOAIMONAN" Width="1.5" PointX="0.75" PointY="1.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="fastfoodModel.MONAN" Width="1.5" PointX="3" PointY="1" IsExpanded="true" />
+        <EntityTypeShape EntityType="fastfoodModel.TAIKHOAN" Width="1.5" PointX="0.75" PointY="4.75" IsExpanded="true" />
+        <AssociationConnector Association="fastfoodModel.FK_DATMONAN_DATMON_TAIKHOAN" ManuallyRouted="false" />
+        <AssociationConnector Association="fastfoodModel.FK_HOADON_CT_HD_DATMONAN" ManuallyRouted="false" />
+        <AssociationConnector Association="fastfoodModel.FK_HOADON_CT_FOOD_MONAN" ManuallyRouted="false" />
+        <AssociationConnector Association="fastfoodModel.FK_MONAN_TYPE_FOOD_LOAIMONA" ManuallyRouted="false" />
+      </Diagram>
+    </edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>

@@ -1,0 +1,75 @@
+﻿@model PagedList.IPagedList<FASTFOOD.MONAN>
+@using PagedList.Mvc;
+@{
+    ViewBag.Title = "SearchFood";
+    Layout = "~/Views/Shared/_LayoutProduct.cshtml";
+}
+
+<script>
+    function AddToCart(MSMONAN) {
+        $.ajax({
+            type: 'POST',
+            url: '/Food/AddToCart',
+            data: { id: MSMONAN },
+            success: function (data) {
+                $("#Cart_Amount").html(data.ItemAmount);
+            }
+        });
+    }
+</script>
+@Html.Partial("_UseNav")
+
+<section class="furniture_section layout_padding">
+    <div class="container">
+        @if (Model != null && Model.Count > 0)
+        {
+            <div class="row">
+                @foreach (var item in Model)
+                {
+                    <div class="col-md-6 col-lg-4">
+                        <div class="box">
+                            <div class="img-box">
+                                @if (item.HINHANH != null)
+                                {
+                                    <img src="@Url.Content("~/Content/Images/" + item.HINHANH)" class="img-edit" />
+                                }
+                                else
+                                {
+                                    <img src="@Url.Content("~/Assets/img/no-product.png")" />
+                                }
+
+                            </div>
+
+                            <div class="detail-box">
+                                <h5 class="product-title">@Html.DisplayFor(modelItem => item.TENMONAN)</h5>
+                                <div class="price_box">
+                                    <h6 class="product-price">@Html.DisplayFor(modelItem => item.DONGIA)</h6>
+                                </div>
+
+                                <input type="submit" class="btn btn-warning" onclick="AddToCart('@item.MSMONAN')" value="Mua hàng" />
+
+
+                            </div>
+
+                        </div>
+
+                    </div>}
+            </div>
+            <div class="d-flex flex-row-reverse mr-5">
+                @Html.PagedListPager(Model, page => Url.Action("Index", new { page }))
+            </div>
+        }
+        else
+        {
+            <div class="card">
+                <div class="card-body">
+                    <p class="lead fw-normal mb-2">Không tìm thấy sản phẩm, quý khách vui lòng thử lại!</p>
+                    <a href="/Food" class="back2shop"><i class="fas fa-long-arrow-alt-left me-2"></i>Trở về trang sản phẩm</a>
+                </div>
+            </div>
+        }
+    </div>
+</section>
+
+
+

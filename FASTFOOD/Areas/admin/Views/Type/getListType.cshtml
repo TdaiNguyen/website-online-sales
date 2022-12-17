@@ -1,0 +1,48 @@
+﻿@*@model IEnumerable<FASTFOOD.LOAIMONAN>*@
+
+@model PagedList.IPagedList<FASTFOOD.LOAIMONAN>
+@using PagedList.Mvc;
+@{
+    ViewBag.Title = "getListType";
+}
+
+<h2>Danh sách loại</h2>
+
+
+<div>
+    @using (Html.BeginForm("CreateType", "Type", FormMethod.Get, new { @class = "form-inline my-2 my-lg-0" }))
+    {
+        <button class="btn btn-outline-warning my-2 my-sm-0" type="submit">Thêm loại</button>
+    }
+</div>
+<table class="table">
+    <tr>
+        <th>
+            Mã số
+        </th>
+        <th>
+            Tên loại
+        </th>
+        <th>Thao tác</th>
+    </tr>
+
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.MSLOAI)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.TENLOAI)
+            </td>
+            <td>
+                @Html.ActionLink("Sửa", "/Edit", new { id = item.MSLOAI }, new { @class = "btn btn-outline-success" }) |
+                @Html.ActionLink("Xóa", "/Delete", new { id = item.MSLOAI }, new { @class = "btn btn-outline-danger" })
+            </td>
+        </tr>
+    }
+
+</table>
+<div class="d-flex flex-row-reverse mr-5">
+    @Html.PagedListPager(Model, page => Url.Action("getListType", new { page }))
+</div>

@@ -1,0 +1,97 @@
+﻿@using FASTFOOD.Models
+@using FASTFOOD.Code
+
+@{
+    if (Session["ShoppingCart"] != null)
+    {
+        int cartcount = 0;
+        List<CartItem> ls = (List<CartItem>)Session["ShoppingCart"];
+        foreach (CartItem item in ls)
+        {
+            cartcount += item.Quantity;
+        }
+        ViewBag.count = cartcount;
+    }
+    else
+    {
+        ViewBag.count = 0;
+    }
+}
+<nav class="navbar navbar-expand-lg custom_nav-container ">
+    <a class="navbar-brand" href="~/Home/index">
+        <span>
+            TDFOOD
+        </span>
+    </a>
+    @*<button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+        <span class=""> </span>
+    </button>*@
+
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+        <div class="d-flex mx-auto flex-column flex-lg-row align-items-center">
+            <ul class="navbar-nav  ">
+
+                <li class="nav-item action">
+                    <a class="nav-link" href="~/Food/Index">Thực Đơn</a>
+                </li>
+
+                @*<li class="nav-item dropdown">
+            <a href="#" class="nav-link dropdown-toggle" id="dropdownmenulink" role="button" data-bs-toggle="dropdown"  aria-expanded="false">
+                loại thực đơn
+            </a>
+            @foreach (var loai in Viewbag.type)
+            {
+                <div class="dropdown-menu show" aria-labelledby="dropdownmenulink">
+
+                    <a class="dropdown-item" href="@Url.Action("Type", "Food", new { id = loai.MSLOAI })" value="@loai.TENLOAI">@loai.TENLOAI</a>
+
+                </div>
+            }
+        </li>*@
+
+                <li class="nav-item dropdown show">
+                    <a href="#" class="nav-link dropdown-toggle"  id="dropdownMenuLink"  role="button"  data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">LOẠI SẢN PHẨM</a> 
+                  
+                    <div class="dropdown-menu" aria-labelledby="dropdownMenuLink">
+                        @foreach (var type in ViewBag.type)
+                        {
+                            <a class="dropdown-item" href="@Url.Action("Type", "Food", new { id = type.MSLOAI })">@type.TENLOAI</a>
+                        }
+                        </div>
+                    
+                </li>
+
+                <li class="nav-item">
+                    <a class="nav-link" href="~/Account/DetailCustomer">Trang Cá Nhân</a>
+                </li>
+            </ul>
+        </div>
+        <div class="edit-navbar">
+            @if (SessionHelper.GetSession() != null)
+            {
+                {
+                    <text>Chào!</text> @SessionHelper.GetSession().get();
+                }
+            }
+        </div>
+        <div class="quote_btn-container">
+
+            @using (Html.BeginForm("SearchFood", "Food", FormMethod.Post, new { @class = "d-flex" }))
+            {
+                @Html.AntiForgeryToken()
+                <input type="text" class="form-control me-2" placeholder="Tìm kiếm" name="term" />
+                <button class="btn btn-outline-success" type="submit"> <i class="fa fa-search" aria-hidden="true"></i></button>
+
+            }
+            <div class="shopping-cart">
+                <a href="/Food/ShoppingCart" class="cart" onclick="window.open('/Food/ShoppingCart','_self')">
+                    <span>
+                        <small id="Cart_Amount">@ViewBag.count</small>
+                        <i class="fa fa-shopping-cart"></i>
+                    </span>
+                </a>
+            </div>
+        </div>
+    </div>
+</nav>

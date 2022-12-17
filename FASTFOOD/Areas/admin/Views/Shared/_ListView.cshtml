@@ -1,0 +1,66 @@
+﻿@model PagedList.IPagedList<FASTFOOD.MONAN>
+@using PagedList.Mvc;
+
+<h2>Danh sách món ăn</h2>
+<div>
+    @using (Html.BeginForm("CreateFood", "Admin", FormMethod.Get, new { @class = "form-inline my-2 my-lg-0" }))
+    {
+        <button class="btn btn-outline-warning my-2 my-sm-0" type="submit">Thêm món mới</button>
+    }
+</div>
+<table class="table text-center">
+    <tr>
+        <th>
+            Mã số món ăn
+        </th>
+        <th>
+            Tên loại
+        </th>
+        <th>
+            Tên món ăn
+        </th>
+        <th>
+            Đơn giá
+        </th>
+        <th>
+            Hình ảnh
+        </th>
+        <th> Thao tác</th>
+    </tr>
+
+    @foreach (var item in Model)
+    {
+        <tr class="text-center">
+            <td>
+                @item.MSMONAN
+            </td>
+            <td>
+                @item.LOAIMONAN.TENLOAI
+            </td>
+            <td>
+                @item.TENMONAN
+            </td>
+            <td>
+                @*@item.DONGIA*@
+                @Html.DisplayFor(modelItem => item.DONGIA)
+            </td>
+            <td>
+                <img src="@Url.Content("~/Content/Images/"+ item.HINHANH)" width="150" height="150" />
+              
+            </td>
+
+
+            <td>
+                @Html.ActionLink("Sửa", "/Edit", new { id = item.MSMONAN }, new { @class = "btn btn-outline-success" })
+                @Html.ActionLink("Chi Tiết", "/Details", new { id = item.MSMONAN }, new { @class = "btn btn-outline-info" })
+                @Html.ActionLink("Xóa", "/Delete", new { id = item.MSMONAN }, new { @class = "btn btn-outline-danger" })
+            </td>
+        </tr>
+        
+    }
+
+</table>
+
+<div class="d-flex flex-row-reverse mr-5">
+    @Html.PagedListPager(Model, page => Url.Action("getListFood", new { page }))
+</div>

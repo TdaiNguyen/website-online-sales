@@ -1,0 +1,61 @@
+﻿@model FASTFOOD.MONAN
+@using FASTFOOD.Models
+@{
+    ViewBag.Title = "Details";
+    Layout = "~/Views/Shared/_LayoutProduct.cshtml";
+}
+
+
+
+<script>
+    function AddToCart(MSMONAN) {
+        $.ajax({
+            type: 'POST',
+            url: '/Food/AddToCart',
+            data: { id: MSMONAN },
+            success: function (data) {
+                $("#Cart_Amount").html(data.ItemAmount);
+            }
+        });
+    }
+</script>
+
+@Html.Partial("_UseNav")
+<section class="signup">
+    <div class="container-layout-account">
+        <h2 class="form-title text-center pt-5" style="font-family: 'FontAwesome'">CHI TIẾT MÓN ĂN</h2>
+        <div class="signup-content">
+            <div class="signup-image">
+                @{ var img = Model.HINHANH;}
+                @if (img != null)
+                {
+                    <img src="@Url.Content("~/Content/Images/"+img)" width="400px" height="400px" class="rounded-circle" />
+                }
+                else
+                {
+                    <img src="@Url.Content("~/Assets/img/no-product.png")" width="150" height="150" class="rounded-circle" />
+                }
+            </div>
+            <div class="signup-form">
+                <div class="form-group">
+                    <p>Tên món</p>
+                    <h6>@Html.DisplayFor(model => model.TENMONAN)</h6>
+                </div>
+                <div class="form-group">
+                    <p>Đơn giá</p>
+                    <h6>@Html.DisplayFor(model => model.DONGIA)</h6>
+                </div>
+                <div class="form-group">
+                    <p>Tên loại</p>
+                    <h6>@Html.DisplayFor(model => model.LOAIMONAN.TENLOAI)</h6>
+                </div>
+                <div class="form-group">
+                    <a class="btn btn-outline-success" onclick="AddToCart(@Model.MSMONAN)"> Thêm vào giỏ </a>
+                    <a href="~/Food/Index" class="btn btn-outline-info">Trở lại</a>
+                </div>
+            </div>
+            </div>
+        </div>
+    </section>
+
+            
